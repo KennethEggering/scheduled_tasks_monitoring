@@ -76,7 +76,8 @@ print(f"Feature-Layer '{scheduled_tasks_flyr_name}' has a spatial-reference of {
 cur_dir = os.curdir
 
 try:
-    file_ = __file__
+    # file_ = __file__
+    file_ = os.path.abspath(__file__)
 except Exception as f_ex:
     file_ = f"Unknown file due to error: {f_ex}"
 
