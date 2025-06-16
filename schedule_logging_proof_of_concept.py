@@ -1,3 +1,4 @@
+import os
 import requests
 import socket
 import time
@@ -7,7 +8,9 @@ from math import pi, log, tan
 
 gis = GIS("pro") ## use "home" in AGO Notebooks, use "pro" in ArcGIS Pro
 
-
+## The following Code is now public on Github here:
+### https://github.com/KennethEggering/scheduled_tasks_monitoring/blob/main/schedule_logging_proof_of_concept.py
+### Code initially developed here: C:\Users\keggering\Projects\Python_Toolboxes\AGO_Backups\schedule_logging_proof_of_concept.py
 
 def create_geometry():
     """
@@ -69,18 +72,22 @@ toolbox_name = "Toolbox_Name"
 print(f"Feature-Layer '{scheduled_tasks_flyr_name}' has a spatial-reference of {scheduled_tasks_flyr_sr}")
 # Define the point geometry and attributes
 
+
+cur_dir = os.curdir
+
 try:
     file_ = __file__
 except Exception as f_ex:
     file_ = f"Unknown file due to error: {f_ex}"
 
+verbose_file = f"current-directory={cur_dir} and file={file_}"
 
 geometry = create_geometry()
 attributes = {
     log_note: f"updated successfully {ymdhm}",
     machine_where_scheduled: host_name,
     toolbox_name: "proof of concept script",
-    file_that_executed: file_,
+    file_that_executed: verbose_file,
     }
 
 # Create and add the feature
