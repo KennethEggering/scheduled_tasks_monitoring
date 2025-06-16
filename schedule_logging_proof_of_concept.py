@@ -76,19 +76,17 @@ print(f"Feature-Layer '{scheduled_tasks_flyr_name}' has a spatial-reference of {
 cur_dir = os.curdir
 
 try:
-    # file_ = __file__
     file_ = os.path.abspath(__file__)
 except Exception as f_ex:
     file_ = f"Unknown file due to error: {f_ex}"
 
-verbose_file = f"current-directory={cur_dir} and file={file_}"
 
 geometry = create_geometry()
 attributes = {
     log_note: f"updated successfully {ymdhm}",
     machine_where_scheduled: host_name,
     toolbox_name: "proof of concept script",
-    file_that_executed: verbose_file,
+    file_that_executed: file_,
     }
 
 # Create and add the feature
