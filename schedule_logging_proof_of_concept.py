@@ -8,6 +8,7 @@ from math import pi, log, tan
 gis = GIS("pro") ## use "home" in AGO Notebooks, use "pro" in ArcGIS Pro
 
 
+
 def create_geometry():
     """
     Editing/including geometry in Feature-Layer ADDS is not all that important. This function is designed to return
@@ -48,18 +49,19 @@ def create_geometry():
     return geom
 
 
-### create a function that can be pulled into misc Toolboxes etc. (perhaps from GitHub)
+### TODO: Create a function that can be pulled into misc Toolboxes etc.
 ### https://stantec.maps.arcgis.com/home/item.html?id=42b6d2ccea08441395d23250ec35b335 <--- Feature-Layer for logging to
 scheduled_tasks_log_item = gis.content.get("42b6d2ccea08441395d23250ec35b335")
 scheduled_tasks_log_fLyr = scheduled_tasks_log_item.layers[0]
 scheduled_tasks_props = scheduled_tasks_log_fLyr.properties
 scheduled_tasks_flyr_sr = scheduled_tasks_props.extent["spatialReference"]
-scheduled_tasks_flyr_name = scheduled_tasks_props["name"]## scheduled_tasks_oid = scheduled_tasks_props["objectIdField"]
+scheduled_tasks_flyr_name = scheduled_tasks_props["name"]
 
 host_name = socket.gethostname()
 ymdhm = time.strftime("%Y%m%d__%H%M")
 
 ### define feature-layer fields
+file_that_executed = "File_That_Executed_git_script"
 log_note = "Log_Note"
 machine_where_scheduled = "Machine_where_scheduled"
 toolbox_name = "Toolbox_Name"
@@ -67,11 +69,18 @@ toolbox_name = "Toolbox_Name"
 print(f"Feature-Layer '{scheduled_tasks_flyr_name}' has a spatial-reference of {scheduled_tasks_flyr_sr}")
 # Define the point geometry and attributes
 
+try:
+    file_ = __file__
+except Exception as f_ex:
+    file_ = f"Unknown file due to error: {f_ex}"
+
+
 geometry = create_geometry()
 attributes = {
     log_note: f"updated successfully {ymdhm}",
     machine_where_scheduled: host_name,
-    toolbox_name: "proof of concept script"
+    toolbox_name: "proof of concept script",
+    file_that_executed: file_,
     }
 
 # Create and add the feature
