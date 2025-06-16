@@ -1,4 +1,5 @@
 import inspect
+import html
 import os
 import requests
 import socket
@@ -87,7 +88,7 @@ attributes = {
     log_note: f"updated successfully {ymdhm}",
     machine_where_scheduled: host_name,
     toolbox_name: "proof of concept script",
-    file_that_executed: str(file_),
+    file_that_executed: html.escape(file_),
     }
 
 # Create and add the feature
